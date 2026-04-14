@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data-gen"
+version = "0.1.0"
+description = "Dataset generator for the benchmark project."
+requires-python = ">=3.14"
+dependencies = [
+  "polars==1.39.3",
+  "numpy",
+]
+
+[project.scripts]
+generate-datasets = "src.run_dataset_gen:main"
+
+[tool.setuptools]
+packages = ["src"]
