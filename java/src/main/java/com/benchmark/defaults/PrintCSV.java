@@ -1,4 +1,4 @@
-package com.tablesaw.benchmark.defaults;
+package com.benchmark.defaults;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -49,7 +49,9 @@ public class PrintCSV {
       String benchmarkSize = result.getParams().getParam("flightsDataset");
 
       String benchmarkName = result.getParams().getBenchmark();
-      String method = benchmarkName.substring(benchmarkName.lastIndexOf('.') + 1);
+      String benchmarkMethod = benchmarkName.substring(benchmarkName.lastIndexOf('.') + 1);
+      String operation = resolveOperationParam(result);
+      String method = resolveMethodName(operation, benchmarkMethod);
 
       double timeScore = result.getPrimaryResult().getScore();
       double cpuScore = result.getSecondaryResults().get("CPU").getScore();
@@ -59,6 +61,31 @@ public class PrintCSV {
     }
 
     System.out.println("Benchmark CSV written to: " + csvPath.toAbsolutePath());
+  }
+
+  private String resolveOperationParam(RunResult result) {
+    try {
+      return result.getParams().getParam("operation");
+    } catch (IllegalArgumentException exception) {
+      return null;
+    }
+  }
+
+  private String resolveMethodName(String operation, String benchmarkMethod) {
+    if (operation == null) {
+      return benchmarkMethod;
+    }
+
+    String capitalizedOperation = operation.substring(0, 1).toUpperCase() + operation.substring(1);
+
+    if ("runOperation".equals(benchmarkMethod)) {
+      return capitalizedOperation;
+    }
+    if ("writeOperation".equals(benchmarkMethod)) {
+      return "Write" + capitalizedOperation;
+    }
+
+    return benchmarkMethod;
   }
 
   private void appendRow(String benchmarkSize, String method, String category, double score, String unit) {

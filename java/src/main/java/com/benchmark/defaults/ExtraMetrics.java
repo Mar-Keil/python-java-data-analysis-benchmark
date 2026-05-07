@@ -1,4 +1,4 @@
-package com.tablesaw.benchmark.defaults;
+package com.benchmark.defaults;
 
 import org.openjdk.jmh.annotations.AuxCounters;
 import org.openjdk.jmh.annotations.Scope;

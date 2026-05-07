@@ -19,11 +19,18 @@ AIRPORT_COORDINATE_ARRAY = np.array(
 )
 
 
+def format_dataset_label(dataset_rows: int) -> str:
+    value_in_thousands = dataset_rows / 1000
+    if value_in_thousands.is_integer():
+        return f"{int(value_in_thousands)}k"
+    return f"{value_in_thousands:g}k"
+
+
 def create_flights_dataset(dataset_rows: int) -> Path:
 
     rng = np.random.default_rng(SEED)
 
-    target_path = OUT_DIR / f"{dataset_rows // 1000}kFlights.parquet"
+    target_path = OUT_DIR / f"{format_dataset_label(dataset_rows)}Flights.parquet"
     target_path.parent.mkdir(parents=True, exist_ok=True)
 
     flight_number = rng.permutation(
