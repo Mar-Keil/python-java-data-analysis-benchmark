@@ -1,5 +1,8 @@
 package com.benchmark.defaults;
 
+import static com.benchmark.defaults.BenchmarkConfig.MEASUREMENT_ITERATIONS;
+import static com.benchmark.defaults.BenchmarkConfig.WARMUP_ITERATIONS;
+
 import com.sun.management.OperatingSystemMXBean;
 import com.logic.DFLibLogic;
 import java.lang.management.ManagementFactory;
@@ -9,8 +12,8 @@ import org.openjdk.jmh.annotations.*;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
-@Warmup(iterations = 3, time = 10, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 7, time = 10, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = WARMUP_ITERATIONS, time = 10, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = MEASUREMENT_ITERATIONS, time = 10, timeUnit = TimeUnit.SECONDS)
 @Fork(
     value = 1, 
     jvmArgsAppend = {
@@ -21,7 +24,6 @@ import org.openjdk.jmh.annotations.*;
 )
 @State(Scope.Benchmark)
 public abstract class BenchmarkDefaults {
-
   protected final DFLibLogic logic;
   protected final OperatingSystemMXBean os;
 
@@ -31,7 +33,7 @@ public abstract class BenchmarkDefaults {
   private final Path dataOutDir;
   private final Path writeRootDir;
 
-  @Param({"31.25k", "125k", "500k", "2000k", "8000k"})
+  @Param({/*"31.25k",*/ "125k"/*, "500k", "2000k", "8000k"*/})
   protected String flightsDataset;
 
   protected BenchmarkDefaults() {

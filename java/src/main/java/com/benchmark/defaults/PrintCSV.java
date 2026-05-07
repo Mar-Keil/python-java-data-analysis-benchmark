@@ -1,5 +1,7 @@
 package com.benchmark.defaults;
 
+import static com.benchmark.defaults.BenchmarkConfig.MEASUREMENT_ITERATIONS;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -54,7 +56,9 @@ public class PrintCSV {
       String method = resolveMethodName(operation, benchmarkMethod);
 
       double timeScore = result.getPrimaryResult().getScore();
-      double cpuScore = result.getSecondaryResults().get("CPU").getScore();
+      double cpuScore =
+          result.getSecondaryResults().get("CPU").getScore()
+              / MEASUREMENT_ITERATIONS;
 
       appendRow(benchmarkSize, method, "Time", timeScore, "s/op");
       appendRow(benchmarkSize, method, "CPU", cpuScore, "cores/op");
