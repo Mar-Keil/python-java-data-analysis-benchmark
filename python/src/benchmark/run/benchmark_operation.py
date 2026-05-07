@@ -5,6 +5,7 @@ from typing import Any
 from typing import Callable
 
 from benchmark.default.default_values import BENCHMARK_ITERATIONS
+from benchmark.default.default_values import BENCHMARK_WARMUP_ITERATIONS
 from benchmark.default.default_values import PARAM
 from benchmark.default.invocation_loop import InvocationLoop
 from benchmark.default.print_csv import PrintCSV
@@ -48,18 +49,21 @@ def benchmark_operation(
         prepare_result_directory(result_path)
 
         for iteration_index in range(BENCHMARK_ITERATIONS):
+            should_measure = iteration_index >= BENCHMARK_WARMUP_ITERATIONS
             invocation_loop_logic = InvocationLoop()
             invocation_loop_logic.start()
 
             while invocation_loop_logic.get_is_looping():
-                logic_measurement.start()
+                if should_measure:
+                    logic_measurement.start()
 
                 if other_dataset is None:
                     operation_result = operation_function(dataset)
                 else:
                     operation_result = operation_function(dataset, other_dataset)
 
-                logic_measurement.stop()
+                if should_measure:
+                    logic_measurement.stop()
 
                 del operation_result
 
@@ -79,16 +83,18 @@ def benchmark_operation(
                 write_output_path = (
                     result_path / f"{write_invocation}_{result_directory}.parquet"
                 )
-                write_measurement.start()
+
+                if should_measure:
+                    write_measurement.start()
 
                 write_function(operation_result, write_output_path)
 
-                write_measurement.stop()
+                if should_measure:
+                    write_measurement.stop()
 
             invocation_loop_write.cancel()
 
             del operation_result
-
             is_last_iteration = iteration_index == BENCHMARK_ITERATIONS - 1
             if not is_last_iteration:
                 clear_result_directory(result_path)

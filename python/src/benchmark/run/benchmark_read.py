@@ -4,11 +4,11 @@ from typing import Callable
 
 from benchmark.default.default_values import AIRLINES_INPUT_PATH
 from benchmark.default.default_values import BENCHMARK_ITERATIONS
+from benchmark.default.default_values import BENCHMARK_WARMUP_ITERATIONS
 from benchmark.default.default_values import PARAM
 from benchmark.default.invocation_loop import InvocationLoop
 from benchmark.default.print_csv import PrintCSV
 from benchmark.default.time_cpu_measurement import TimeCPUMeasurement
-
 
 def benchmark_read(
     print_csv: PrintCSV,
@@ -17,17 +17,20 @@ def benchmark_read(
     time_measurement = TimeCPUMeasurement(print_csv)
 
     for path in PARAM:
-        for _ in range(BENCHMARK_ITERATIONS):
+        for iteration_index in range(BENCHMARK_ITERATIONS):
+            should_measure = iteration_index >= BENCHMARK_WARMUP_ITERATIONS
             invocation_loop = InvocationLoop()
             invocation_loop.start()
 
             while invocation_loop.get_is_looping():
-                time_measurement.start()
+                if should_measure:
+                    time_measurement.start()
 
                 flights = read_function(path)
                 airlines = read_function(AIRLINES_INPUT_PATH)
 
-                time_measurement.stop()
+                if should_measure:
+                    time_measurement.stop()
 
                 del flights
                 del airlines
