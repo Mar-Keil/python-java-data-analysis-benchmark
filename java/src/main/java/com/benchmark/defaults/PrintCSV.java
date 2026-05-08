@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Locale;
 import java.util.Collection;
 import org.openjdk.jmh.results.RunResult;
 
@@ -98,7 +99,7 @@ public class PrintCSV {
                 benchmarkSize,
                 method,
                 category,
-                Double.toString(score),
+                formatScore(score),
                 unit)
             + System.lineSeparator();
 
@@ -108,5 +109,9 @@ public class PrintCSV {
     } catch (IOException exception) {
         throw new IllegalStateException("Could not append benchmark result to CSV.", exception);
     }
+  }
+
+  private String formatScore(double score) {
+    return String.format(Locale.ROOT, "%.12f", score);
   }
 }

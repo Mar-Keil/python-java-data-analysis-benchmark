@@ -81,6 +81,7 @@ generate_datasets_if_needed() {
 run_java_benchmark() {
   require_command mvn
   require_command java
+  require_command caffeinate
 
   echo "Packaging Java benchmark..."
   mvn -f "$JAVA_DIR/pom.xml" -q -DskipTests package
@@ -91,7 +92,7 @@ run_java_benchmark() {
   fi
 
   echo "Running Java benchmark..."
-  java -jar "$BENCHMARK_JAR"
+  caffeinate -im java -jar "$BENCHMARK_JAR"
 }
 
 main() {
