@@ -17,8 +17,8 @@ public final class RunBenchmark {
 
     Options options =
         new OptionsBuilder()
-            .include(ReadBenchmarks.class.getName())
             .include(OperationBenchmarks.class.getName())
+            .include(ReadBenchmarks.class.getName())
             .include(WriteBenchmarks.class.getName())
             .build();
 

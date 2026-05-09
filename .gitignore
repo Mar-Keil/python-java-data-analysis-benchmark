@@ -218,6 +218,9 @@ out/
 # LaTeX
 *.aux
 *.bbl
+
+# Local project notes
+project-todos.txt
 *.bcf
 *.blg
 *.fdb_latexmk
