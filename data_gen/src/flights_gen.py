@@ -108,7 +108,7 @@ def create_flights_dataset(dataset_rows: int) -> Path:
 
     flights_df = pl.DataFrame(
         {
-            "flight_number": "FL" + pl.Series("flight_number", flight_number).cast(pl.Utf8),
+            "flight_number": flight_number,
             "msn_number": "MSN" +  pl.Series("msn_number", msn_number).cast(pl.Utf8),
             "aircraft_model": aircraft_model,
             "airline_code": airline_code,
@@ -120,7 +120,7 @@ def create_flights_dataset(dataset_rows: int) -> Path:
             "arrival_time": arrival_time_formatted,
         },
         schema={
-            "flight_number": pl.Utf8,
+            "flight_number": pl.Int32,
             "msn_number": pl.Utf8,
             "aircraft_model": pl.Utf8,
             "airline_code": pl.Int32,
