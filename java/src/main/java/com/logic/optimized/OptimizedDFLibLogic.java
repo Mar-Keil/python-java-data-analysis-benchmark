@@ -26,7 +26,7 @@ public class OptimizedDFLibLogic {
   public DataFrame pivot(DataFrame flights) {
     if (toSmall(flights.height())) return logic.pivot(flights);
     DataFrame partialResult = parallelizer.execute(flights, logic::pivot);
-    return logic.pivot(partialResult);
+    return logic.mergePivot(partialResult);
   }
 
   public DataFrame groupCount(DataFrame flights) {
