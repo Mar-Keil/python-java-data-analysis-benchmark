@@ -21,7 +21,7 @@ public class DFLibLogic {
     return flights.rows($str("aircraft_model").eq("A319neo")).select();
   }
 
-  public DataFrame pivot(DataFrame flights) {
+    public DataFrame pivot(DataFrame flights) {
     return flights.group("aircraft_model").agg(
         $str("aircraft_model").first().as("aircraft_model"),
         $int("flight_distance").sum().as("sum_flight_distance"));
@@ -32,6 +32,13 @@ public class DFLibLogic {
         $str("aircraft_model").first().as("aircraft_model"),
         $int("airline_code").first().as("airline_code"),
         count().as("count_aircraft"));
+  }
+
+  public DataFrame mergeGroupCount(DataFrame groupedFlights) {
+    return groupedFlights.group("aircraft_model", "airline_code").agg(
+        $str("aircraft_model").first().as("aircraft_model"),
+        $int("airline_code").first().as("airline_code"),
+        $int("count_aircraft").sum().as("count_aircraft"));
   }
 
   public DataFrame join(DataFrame flights, DataFrame airlines) {

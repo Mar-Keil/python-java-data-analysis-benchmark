@@ -11,11 +11,16 @@ import java.util.concurrent.Future;
 import org.dflib.DataFrame;
 
 public class Parallelizer {
-  private static final int MIN_ROWS_PER_CHUNK = 125_000;
+  
+  private final int min_rows;
+  
+  public Parallelizer(int min_rows) {
+    this.min_rows = min_rows;
+  }
 
   public List<ChunkRange> split(int rowCount) {
     int chunkCount = Math.clamp(
-        Math.ceilDiv(rowCount, MIN_ROWS_PER_CHUNK),
+        Math.ceilDiv(rowCount, min_rows),
         1,
         Runtime.getRuntime().availableProcessors());
 
@@ -34,10 +39,6 @@ public class Parallelizer {
 
   public DataFrame execute(DataFrame flights, Function<DataFrame, DataFrame> operation) {
     List<ChunkRange> chunks = split(flights.height());
-
-    if (chunks.size() == 1) {
-      return operation.apply(flights);
-    }
 
     try (ExecutorService executor = Executors.newFixedThreadPool(chunks.size())) {
       List<Future<DataFrame>> futures = new ArrayList<>(chunks.size());
