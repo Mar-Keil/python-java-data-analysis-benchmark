@@ -31,22 +31,15 @@ def clear_result_directory(path: Path) -> None:
 
 def benchmark_operation(
     print_csv: PrintCSV,
-    output_dir: Path,
-    read_function: Callable[[str | Path], Any],
-    write_function: Callable[[Any, str | Path], None],
+    read_function: Callable[[Path], Any],
     operation_function: Callable[..., Any],
-    result_directory: str,
     method_name: str,
-    write_method_name: str,
     other_dataset: Any | None = None,
 ) -> None:
     logic_measurement = TimeCPUMeasurement(print_csv)
-    write_measurement = TimeCPUMeasurement(print_csv)
 
     for path in PARAM:
         dataset = read_function(path)
-        result_path = output_dir / result_directory
-        prepare_result_directory(result_path)
 
         for iteration_index in range(BENCHMARK_ITERATIONS):
             should_measure = iteration_index >= BENCHMARK_WARMUP_ITERATIONS
@@ -69,36 +62,5 @@ def benchmark_operation(
 
             invocation_loop_logic.cancel()
 
-            if other_dataset is None:
-                operation_result = operation_function(dataset)
-            else:
-                operation_result = operation_function(dataset, other_dataset)
-
-            invocation_loop_write = InvocationLoop()
-            invocation_loop_write.start()
-            write_invocation = 0
-
-            while invocation_loop_write.get_is_looping():
-                write_invocation += 1
-                write_output_path = (
-                    result_path / f"{write_invocation}_{result_directory}.parquet"
-                )
-
-                if should_measure:
-                    write_measurement.start()
-
-                write_function(operation_result, write_output_path)
-
-                if should_measure:
-                    write_measurement.stop()
-
-            invocation_loop_write.cancel()
-
-            del operation_result
-            is_last_iteration = iteration_index == BENCHMARK_ITERATIONS - 1
-            if not is_last_iteration:
-                clear_result_directory(result_path)
-
         benchmark_size = path.stem.replace("Flights", "")
         logic_measurement.write_results(benchmark_size, method_name)
-        write_measurement.write_results(benchmark_size, write_method_name)

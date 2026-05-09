@@ -3,6 +3,7 @@ from benchmark.default.default_values import POLARS_OUT_DIR
 from benchmark.default.print_csv import PrintCSV
 from benchmark.run.benchmark_operation import benchmark_operation
 from benchmark.run.benchmark_read import benchmark_read
+from benchmark.run.benchmark_write import benchmark_write
 from logic import polars_logic
 
 
@@ -18,15 +19,18 @@ class BenchmarkRunner:
 
             benchmark_operation(
                 print_csv,
-                POLARS_OUT_DIR,
                 polars_logic.read_parquet,
-                polars_logic.write_parquet,
                 getattr(polars_logic, f"{operation}_dataset"),
-                operation,
                 _method_name(operation),
-                f"Write{_method_name(operation)}",
                 other_dataset=other_dataset,
             )
+
+        benchmark_write(
+            print_csv,
+            POLARS_OUT_DIR,
+            polars_logic.read_parquet,
+            polars_logic.write_parquet,
+        )
 
 def _method_name(operation: str) -> str:
     return {
