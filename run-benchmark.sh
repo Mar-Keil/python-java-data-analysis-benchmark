@@ -7,6 +7,9 @@ DATA_GEN_DIR="$ROOT_DIR/data_gen"
 DATA_OUT_DIR="$DATA_GEN_DIR/out"
 DATA_GEN_VENV_BIN_DIR="$DATA_GEN_DIR/.venv/bin"
 DATASET_GENERATOR="$DATA_GEN_VENV_BIN_DIR/generate-datasets"
+PYTHON_DIR="$ROOT_DIR/python"
+PYTHON_VENV_BIN_DIR="$PYTHON_DIR/.venv/bin"
+PYTHON_BENCHMARK_RUNNER="$PYTHON_DIR/src/benchmark/run_benchmarks.py"
 JAVA_DIR="$ROOT_DIR/java"
 BENCHMARK_JAR="$JAVA_DIR/target/benchmarks.jar"
 
@@ -95,8 +98,31 @@ run_java_benchmark() {
   caffeinate -im java -jar "$BENCHMARK_JAR"
 }
 
+run_python_benchmark() {
+  local python_bin
+
+  require_command caffeinate
+
+  python_bin="$PYTHON_VENV_BIN_DIR/python"
+
+  if [[ ! -x "$python_bin" ]]; then
+    echo "Python benchmark interpreter was not found at: $python_bin"
+    echo "Create the python virtual environment and install the benchmark dependencies first."
+    exit 1
+  fi
+
+  if [[ ! -f "$PYTHON_BENCHMARK_RUNNER" ]]; then
+    echo "Python benchmark runner was not found: $PYTHON_BENCHMARK_RUNNER"
+    exit 1
+  fi
+
+  echo "Running Python benchmark..."
+  caffeinate -im env PYTHONPATH="$PYTHON_DIR/src" "$python_bin" "$PYTHON_BENCHMARK_RUNNER"
+}
+
 main() {
   generate_datasets_if_needed
+  run_python_benchmark
   run_java_benchmark
 }
 
