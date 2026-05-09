@@ -116,7 +116,7 @@ run_python_benchmark() {
     exit 1
   fi
 
-  echo "Running Python benchmark..."
+  echo "Running Polars benchmark..."
   caffeinate -im env PYTHONPATH="$PYTHON_DIR/src" "$python_bin" "$PYTHON_BENCHMARK_RUNNER"
 }
 
