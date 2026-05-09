@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.dflib.DataFrame;
-import org.dflib.IntSeries;
+import org.dflib.Series;
 
 public class Sorter {
   private final DFLibLogic logic = new DFLibLogic();
@@ -18,7 +18,7 @@ public class Sorter {
         1,
         Runtime.getRuntime().availableProcessors());
 
-    int[] minMax = getSortRange(flights.<Integer>getColumn("flight_number").castAsInt());
+    int[] minMax = getSortRange(flights.<Integer>getColumn("flight_number"));
 
     int rangeWidth = Math.ceilDiv(minMax[1] - minMax[0], chunkCount);
 
@@ -38,9 +38,9 @@ public class Sorter {
     }
   }
 
-  private int[] getSortRange(IntSeries flightNumbers) {
-    int min = flightNumbers.first();
-    int max = flightNumbers.first();
+  private int[] getSortRange(Series<Integer> flightNumbers) {
+    int min = flightNumbers.get(0);
+    int max = flightNumbers.get(0);
 
     for (int i = 1; i < flightNumbers.size(); i++) {
       int current = flightNumbers.get(i);
