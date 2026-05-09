@@ -18,8 +18,8 @@ import org.openjdk.jmh.annotations.*;
 @Fork(
     value = 1, 
     jvmArgsAppend = {
-        "-Xms14G", 
-        "-Xmx14G", 
+        "-Xms13G", 
+        "-Xmx13G", 
         "-XX:+UseG1GC"
     }
 )
