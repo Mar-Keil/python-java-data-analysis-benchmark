@@ -12,15 +12,15 @@ import org.dflib.DataFrame;
 
 public class Parallelizer {
   
-  private final int min_rows;
+  private final int minRows;
   
-  public Parallelizer(int min_rows) {
-    this.min_rows = min_rows;
+  public Parallelizer(int minRows) {
+    this.minRows = minRows;
   }
 
   public List<ChunkRange> split(int rowCount) {
     int chunkCount = Math.clamp(
-        Math.ceilDiv(rowCount, min_rows),
+        Math.ceilDiv(rowCount, minRows),
         1,
         Runtime.getRuntime().availableProcessors());
 

@@ -6,12 +6,13 @@ import com.logic.DFLibLogic;
 
 public class OptimizedDFLibLogic {
 
-  private final int min_rows = 125_000;
+  private final int minRows = 125_000;
 
   private final DFLibLogic logic = new DFLibLogic();
-  private final Parallelizer parallelizer = new Parallelizer(min_rows);
+  private final Parallelizer parallelizer = new Parallelizer(minRows);
+  private final Sorter sorter = new Sorter();
 
-  public boolean toSmall(int rows) {return rows <= min_rows;}
+  public boolean toSmall(int rows) {return rows <= minRows;}
 
   public DataFrame filter(DataFrame flights) {
     if (toSmall(flights.height())) return logic.filter(flights);
@@ -33,5 +34,10 @@ public class OptimizedDFLibLogic {
     if (toSmall(flights.height())) return logic.groupCount(flights);
     DataFrame partialResult = parallelizer.execute(flights, logic::groupCount);
     return logic.mergeGroupCount(partialResult);
+  }
+
+  public DataFrame sort(DataFrame flights) {
+    if (toSmall(flights.height())) return logic.sort(flights);
+    return sorter.execute(flights, minRows);
   }
 }

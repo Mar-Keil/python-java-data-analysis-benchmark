@@ -21,6 +21,12 @@ public class DFLibLogic {
     return flights.rows($str("aircraft_model").eq("A319neo")).select();
   }
 
+  public DataFrame filterRange(DataFrame flights, int lowerBound, int upperBound) {
+    return flights.rows(
+        $int("flight_number").ge(lowerBound).and($int("flight_number").lt(upperBound)))
+        .select();
+  }
+
   public DataFrame pivot(DataFrame flights) {
     return flights.group("aircraft_model").agg(
         $str("aircraft_model").first().as("aircraft_model"),
