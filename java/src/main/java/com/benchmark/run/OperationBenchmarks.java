@@ -1,7 +1,6 @@
 package com.benchmark.run;
 
 import com.benchmark.defaults.BenchmarkDefaults;
-import java.io.IOException;
 import org.dflib.DataFrame;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
@@ -20,23 +19,31 @@ public class OperationBenchmarks extends BenchmarkDefaults {
   private DataFrame rawAirlines;
 
   @Setup(Level.Trial)
-  public void setupTrial() throws IOException {
+  public void setupTrial(){
     rawFlights = logic.readParquet(resolveFlightsPath(flightsDataset));
     rawAirlines = logic.readParquet(resolveAirlinesPath());
   }
 
   @Benchmark
   public DataFrame runOperation() {
-    return runSelectedOperation();
-  }
-
-  private DataFrame runSelectedOperation() {
     return switch (operation) {
       case "filter" -> logic.filter(rawFlights);
       case "sort" -> logic.sort(rawFlights);
       case "pivot" -> logic.pivot(rawFlights);
       case "groupCount" -> logic.groupCount(rawFlights);
       case "join" -> logic.join(rawFlights, rawAirlines);
+      default -> throw new IllegalStateException("Unsupported operation: " + operation);
+    };
+  }
+
+  @Benchmark
+  public DataFrame runOptimizedOperation() {
+    return switch (operation) {
+      case "filter" -> optimizedLogic.filter(rawFlights);
+      case "sort" -> optimizedLogic.sort(rawFlights);
+      case "pivot" -> optimizedLogic.pivot(rawFlights);
+      case "groupCount" -> optimizedLogic.groupCount(rawFlights);
+      case "join" -> optimizedLogic.join(rawFlights, rawAirlines);
       default -> throw new IllegalStateException("Unsupported operation: " + operation);
     };
   }

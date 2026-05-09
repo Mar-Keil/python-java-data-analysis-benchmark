@@ -3,6 +3,7 @@ package com.benchmark.defaults;
 import static com.benchmark.defaults.BenchmarkConfig.MEASUREMENT_ITERATIONS;
 import static com.benchmark.defaults.BenchmarkConfig.WARMUP_ITERATIONS;
 
+import com.logic.optimized.OptimizedDFLibLogic;
 import com.sun.management.OperatingSystemMXBean;
 import com.logic.DFLibLogic;
 import java.lang.management.ManagementFactory;
@@ -25,6 +26,7 @@ import org.openjdk.jmh.annotations.*;
 @State(Scope.Benchmark)
 public abstract class BenchmarkDefaults {
   protected final DFLibLogic logic;
+  protected final OptimizedDFLibLogic optimizedLogic;
   protected final OperatingSystemMXBean os;
 
   private long realBefore;
@@ -33,11 +35,12 @@ public abstract class BenchmarkDefaults {
   private final Path dataOutDir;
   private final Path writeRootDir;
 
-  @Param({/*"31.25k",*/ "125k"/*, "500k", "2000k", "8000k"*/})
+  @Param({/*"31.25k",*/ "125k"/*, "500k"*/, "2000k", "8000k"})
   protected String flightsDataset;
 
   protected BenchmarkDefaults() {
     this.logic = new DFLibLogic();
+    this.optimizedLogic = new OptimizedDFLibLogic();
     this.os = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 
     Path cwd = Path.of("").toAbsolutePath().normalize();
@@ -54,8 +57,8 @@ public abstract class BenchmarkDefaults {
     return dataOutDir.resolve("airlines.parquet");
   }
 
-  protected Path resolveWriteOutputDir(String benchmarkName) {
-    return writeRootDir.resolve(benchmarkName);
+  protected Path resolveWriteSortOutputDir() {
+    return writeRootDir.resolve("sort");
   }
 
   @Setup(Level.Iteration)

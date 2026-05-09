@@ -22,7 +22,7 @@ public class WriteBenchmarks extends BenchmarkDefaults {
     DataFrame rawFlights = logic.readParquet(resolveFlightsPath(flightsDataset));
     sortedFlights = logic.sort(rawFlights);
 
-    Path outputDir = resolveWriteOutputDir("sort");
+    Path outputDir = resolveWriteSortOutputDir();
     Files.createDirectories(outputDir);
     output = outputDir.resolve(flightsDataset + "Sort.parquet");
   }
