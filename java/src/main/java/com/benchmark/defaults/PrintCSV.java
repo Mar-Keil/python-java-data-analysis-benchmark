@@ -86,8 +86,8 @@ public class PrintCSV {
     if ("runOperation".equals(benchmarkMethod)) {
       return capitalizedOperation;
     }
-    if ("writeOperation".equals(benchmarkMethod)) {
-      return "Write" + capitalizedOperation;
+    if ("writeSortResult".equals(benchmarkMethod)) {
+      return "WriteSort";
     }
 
     return benchmarkMethod;

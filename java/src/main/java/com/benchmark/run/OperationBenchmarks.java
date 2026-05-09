@@ -2,8 +2,6 @@ package com.benchmark.run;
 
 import com.benchmark.defaults.BenchmarkDefaults;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import org.dflib.DataFrame;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
@@ -20,30 +18,16 @@ public class OperationBenchmarks extends BenchmarkDefaults {
 
   private DataFrame rawFlights;
   private DataFrame rawAirlines;
-  private DataFrame operationResult;
-  private Path output;
 
   @Setup(Level.Trial)
   public void setupTrial() throws IOException {
     rawFlights = logic.readParquet(resolveFlightsPath(flightsDataset));
     rawAirlines = logic.readParquet(resolveAirlinesPath());
-    operationResult = runSelectedOperation();
-
-    Path outputDir = resolveWriteOutputDir(operation);
-    Files.createDirectories(outputDir);
-    output = outputDir.resolve(flightsDataset + capitalize(operation) + ".parquet");
   }
 
   @Benchmark
   public DataFrame runOperation() {
-    operationResult = runSelectedOperation();
-    return operationResult;
-  }
-
-  @Benchmark
-  public int writeOperation() {
-    logic.writeParquet(operationResult, output);
-    return operationResult.height();
+    return runSelectedOperation();
   }
 
   private DataFrame runSelectedOperation() {
@@ -55,9 +39,5 @@ public class OperationBenchmarks extends BenchmarkDefaults {
       case "join" -> logic.join(rawFlights, rawAirlines);
       default -> throw new IllegalStateException("Unsupported operation: " + operation);
     };
-  }
-
-  private String capitalize(String value) {
-    return value.substring(0, 1).toUpperCase() + value.substring(1);
   }
 }
