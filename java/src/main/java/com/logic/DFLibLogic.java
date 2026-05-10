@@ -54,7 +54,7 @@ public class DFLibLogic {
   }
 
   public DataFrame join(DataFrame flights, DataFrame airlines) {
-    return flights.join(airlines).on("airline_code").select();
+    return flights.join(airlines).on("airline_code").colsExcept("airline_code_").select();
   }
 
   public DataFrame sort(DataFrame flights) {

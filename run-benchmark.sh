@@ -84,7 +84,6 @@ generate_datasets_if_needed() {
 run_java_benchmark() {
   require_command mvn
   require_command java
-  require_command caffeinate
 
   echo "Packaging Java benchmark..."
   mvn -f "$JAVA_DIR/pom.xml" -q -DskipTests package
@@ -95,13 +94,11 @@ run_java_benchmark() {
   fi
 
   echo "Running Java benchmark..."
-  caffeinate -im java -jar "$BENCHMARK_JAR"
+  java -jar "$BENCHMARK_JAR"
 }
 
 run_python_benchmark() {
   local python_bin
-
-  require_command caffeinate
 
   python_bin="$PYTHON_VENV_BIN_DIR/python"
 
@@ -117,13 +114,19 @@ run_python_benchmark() {
   fi
 
   echo "Running Polars benchmark..."
-  caffeinate -im env PYTHONPATH="$PYTHON_DIR/src" "$python_bin" "$PYTHON_BENCHMARK_RUNNER"
+  env PYTHONPATH="$PYTHON_DIR/src" "$python_bin" "$PYTHON_BENCHMARK_RUNNER"
 }
 
 main() {
+  require_command caffeinate
   generate_datasets_if_needed
   run_python_benchmark
   run_java_benchmark
 }
 
-main "$@"
+if [[ "${1:-}" == "--run-main" ]]; then
+  shift
+  main "$@"
+else
+  caffeinate -ims "$0" --run-main "$@"
+fi
