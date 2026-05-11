@@ -6,11 +6,10 @@ OUT_DIR = BASE_DIR / "out"
 SEED = 42
 
 BENCHMARK_DATASET_ROWS = (
-    31_250,
     125_000,
     500_000,
     2_000_000,
-    8_000_000,
+    8_000_000
 )
 
 AIRCRAFT_MODELS = (
