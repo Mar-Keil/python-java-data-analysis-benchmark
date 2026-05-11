@@ -15,7 +15,6 @@ BENCHMARK_JAR="$JAVA_DIR/target/benchmarks.jar"
 
 EXPECTED_DATASETS=(
   "airlines.parquet"
-  "31.25kFlights.parquet"
   "125kFlights.parquet"
   "500kFlights.parquet"
   "2000kFlights.parquet"
