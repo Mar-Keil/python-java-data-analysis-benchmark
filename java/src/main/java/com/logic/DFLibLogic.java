@@ -8,6 +8,10 @@ import java.nio.file.Path;
 import org.dflib.DataFrame;
 import org.dflib.parquet.Parquet;
 
+/**
+ * Provides the sequential DFLib-based implementations of the benchmarked
+ * data analysis operations.
+ */
 public class DFLibLogic {
   public DataFrame readParquet(Path input) {
     return Parquet.load(input);

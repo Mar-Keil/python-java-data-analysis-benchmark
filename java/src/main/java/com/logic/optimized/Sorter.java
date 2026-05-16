@@ -9,6 +9,10 @@ import java.util.concurrent.Future;
 import org.dflib.DataFrame;
 import org.dflib.Series;
 
+/**
+ * Provides the manually parallelized sort implementation by partitioning rows into value-based
+ * chunks derived from the minimum and maximum values of the to-be-sorted column.
+ */
 public class Sorter {
   private final DFLibLogic logic = new DFLibLogic();
 

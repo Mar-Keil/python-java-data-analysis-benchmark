@@ -10,6 +10,9 @@ import java.util.concurrent.Future;
 
 import org.dflib.DataFrame;
 
+/**
+ * Splits data frames into row-based chunks and executes DFLib operations on them in parallel.
+ */
 public class Parallelizer {
   
   private final int minRows;

@@ -4,6 +4,10 @@ import org.dflib.DataFrame;
 
 import com.logic.DFLibLogic;
 
+/**
+ * Provides the entry points for the manually parallelized DFLib benchmark operations
+ * and applies early exits for datasets that are too small to benefit from parallel execution.
+ */
 public class OptimizedDFLibLogic {
 
   private final int minRows = 125_000;
