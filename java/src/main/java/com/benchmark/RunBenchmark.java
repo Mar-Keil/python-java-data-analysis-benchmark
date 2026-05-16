@@ -9,6 +9,10 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+/**
+ * Serves as the entry point for executing the configured JMH benchmarks
+ * and forwarding their results to {@link PrintCSV}.
+ */
 public final class RunBenchmark {
 
   public static void main(String[] args) throws RunnerException {

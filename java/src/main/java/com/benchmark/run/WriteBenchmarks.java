@@ -11,6 +11,9 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 
+/**
+ * Benchmarks writing the sorted flight dataset to a parquet file with DFLib.
+ */
 @State(Scope.Benchmark)
 public class WriteBenchmarks extends BenchmarkDefaults {
 

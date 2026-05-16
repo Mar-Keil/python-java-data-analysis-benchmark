@@ -6,7 +6,8 @@ import com.logic.DFLibLogic;
 
 /**
  * Provides the entry points for the manually parallelized DFLib benchmark operations
- * and applies early exits for datasets that are too small to benefit from parallel execution.
+ * by delegating large datasets to {@link Parallelizer} and {@link Sorter} and small
+ * datasets directly to the sequential {@link DFLibLogic} implementation.
  */
 public class OptimizedDFLibLogic {
 

@@ -1,5 +1,6 @@
 package com.logic.optimized;
 
+import com.logic.DFLibLogic;
 import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.concurrent.Future;
 import org.dflib.DataFrame;
 
 /**
- * Splits data frames into row-based chunks and executes DFLib operations on them in parallel.
+ * Splits data frames into row-based chunks and forwards them to
+ * {@link DFLibLogic}-based operations for parallel execution.
  */
 public class Parallelizer {
   

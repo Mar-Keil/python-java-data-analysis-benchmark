@@ -6,6 +6,9 @@ import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 
+/**
+ * Benchmarks reading the flight and the airlines parquet datasets with DFLib.
+ */
 @State(Scope.Benchmark)
 public class ReadBenchmarks extends BenchmarkDefaults {
 

@@ -11,6 +11,11 @@ import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 import org.openjdk.jmh.annotations.*;
 
+/**
+ * Provides the shared benchmark configuration, state, and helper methods
+ * for the JMH benchmark classes.
+ */
+
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Warmup(iterations = WARMUP_ITERATIONS, time = 10, timeUnit = TimeUnit.SECONDS)

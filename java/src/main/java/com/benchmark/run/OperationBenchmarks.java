@@ -9,6 +9,10 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 
+/**
+ * Benchmarks the analytical DFLib and OptimizedDFLib operations
+ * across the configured dataset sizes and operation types.
+ */
 @State(Scope.Benchmark)
 public class OperationBenchmarks extends BenchmarkDefaults {
 

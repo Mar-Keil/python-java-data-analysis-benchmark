@@ -11,6 +11,9 @@ import java.util.Locale;
 import java.util.Collection;
 import org.openjdk.jmh.results.RunResult;
 
+/**
+ * Converts JMH benchmark results into CSV rows and writes them to the project output directory.
+ */
 public class PrintCSV {
 
   private final Path outputDir;
