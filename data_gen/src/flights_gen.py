@@ -11,6 +11,8 @@ from src.config import AIRPORT_CODES
 from src.config import AIRPORT_COORDINATES
 from src.config import AVERAGE_FLIGHT_SPEED_KMH
 
+"""Generates the benchmark flight datasets for the configured dataset sizes."""
+
 EARTH_RADIUS_KM = 6371.0088
 AIRPORT_INDEX = {code: idx for idx, code in enumerate(AIRPORT_CODES)}
 AIRPORT_COORDINATE_ARRAY = np.array(

@@ -5,6 +5,8 @@ import polars as pl
 
 from src.config import OUT_DIR, AIRLINE_NAMES, AIRPORT_CODES, SEED
 
+"""Generates the benchmark airline dataset."""
+
 def create_airlines_dataset() -> Path:
     target_path = OUT_DIR / "airlines.parquet"
     target_path.parent.mkdir(parents=True, exist_ok=True)

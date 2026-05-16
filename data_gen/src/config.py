@@ -1,5 +1,7 @@
 from pathlib import Path
 
+"""Defines the shared values for benchmark dataset generation."""
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 OUT_DIR = BASE_DIR / "out"
 

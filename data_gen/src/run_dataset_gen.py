@@ -5,6 +5,7 @@ from src.config import BENCHMARK_DATASET_ROWS
 from src.airline_gen import create_airlines_dataset
 from src.flights_gen import create_flights_dataset
 
+"""Serves as the entry point for generating the benchmark datasets."""
 
 def main() -> None:
     print(f"Wrote airlines to {create_airlines_dataset()}")
