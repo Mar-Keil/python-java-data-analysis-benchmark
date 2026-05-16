@@ -12,6 +12,8 @@ from benchmark.run.benchmark_operation import clear_result_directory
 from benchmark.run.benchmark_operation import prepare_result_directory
 from logic import polars_logic
 
+"""Provides the benchmark routine for writing the generated operation results."""
+
 
 def benchmark_write(
     print_csv: PrintCSV,

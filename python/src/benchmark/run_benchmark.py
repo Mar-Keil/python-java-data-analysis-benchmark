@@ -6,6 +6,7 @@ from benchmark.run.benchmark_read import benchmark_read
 from benchmark.run.benchmark_write import benchmark_write
 from logic import polars_logic
 
+"""Serves as the entry point for executing the configured benchmark operations."""
 
 class BenchmarkRunner:
     def run(self) -> None:
@@ -33,13 +34,7 @@ class BenchmarkRunner:
         )
 
 def _method_name(operation: str) -> str:
-    return {
-        "filter": "Filter",
-        "sort": "Sort",
-        "pivot": "Pivot",
-        "group_count": "GroupCount",
-        "join": "Join",
-    }[operation]
+    return "".join(part.capitalize() for part in operation.split("_"))
 
 
 def main() -> None:

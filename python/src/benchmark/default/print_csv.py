@@ -2,6 +2,8 @@ import csv
 
 from pathlib import Path
 
+"""Provides the CSV writer print the benchmark results."""
+
 
 class PrintCSV:
     def __init__(self, output_dir: Path) -> None:

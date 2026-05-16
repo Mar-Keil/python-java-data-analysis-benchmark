@@ -9,7 +9,7 @@ DATA_GEN_VENV_BIN_DIR="$DATA_GEN_DIR/.venv/bin"
 DATASET_GENERATOR="$DATA_GEN_VENV_BIN_DIR/generate-datasets"
 PYTHON_DIR="$ROOT_DIR/python"
 PYTHON_VENV_BIN_DIR="$DATA_GEN_VENV_BIN_DIR"
-PYTHON_BENCHMARK_RUNNER="$PYTHON_DIR/src/benchmark/run_benchmarks.py"
+PYTHON_BENCHMARK_RUNNER="$PYTHON_DIR/src/benchmark/run_benchmark.py"
 JAVA_DIR="$ROOT_DIR/java"
 BENCHMARK_JAR="$JAVA_DIR/target/benchmarks.jar"
 

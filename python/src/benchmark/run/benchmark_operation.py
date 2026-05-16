@@ -11,6 +11,8 @@ from benchmark.default.invocation_loop import InvocationLoop
 from benchmark.default.print_csv import PrintCSV
 from benchmark.default.time_cpu_measurement import TimeCPUMeasurement
 
+"""Provides the benchmark routine for executing the configured dataset operations."""
+
 
 def prepare_result_directory(path: Path) -> None:
     if path.exists():

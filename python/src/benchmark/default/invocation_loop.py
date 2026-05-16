@@ -2,6 +2,8 @@ from threading import Timer
 
 from benchmark.default.default_values import BENCHMARK_DURATION_SECONDS
 
+"""Provides the timed invocation loop for executing benchmark operations."""
+
 
 class InvocationLoop:
     def __init__(self) -> None:

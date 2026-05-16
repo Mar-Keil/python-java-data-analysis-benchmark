@@ -10,6 +10,8 @@ from benchmark.default.invocation_loop import InvocationLoop
 from benchmark.default.print_csv import PrintCSV
 from benchmark.default.time_cpu_measurement import TimeCPUMeasurement
 
+"""Provides the benchmark routine for reading the flight and airline datasets."""
+
 def benchmark_read(
     print_csv: PrintCSV,
     read_function: Callable[[Path], Any],

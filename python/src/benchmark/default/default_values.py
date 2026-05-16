@@ -1,5 +1,7 @@
 from pathlib import Path
 
+"""Defines the shared default values for the benchmark configuration."""
+
 BASE_DIR = Path(__file__).resolve().parents[2]
 REPO_ROOT = BASE_DIR.parents[1]
 BENCHMARKING_DIR = BASE_DIR / "benchmark"

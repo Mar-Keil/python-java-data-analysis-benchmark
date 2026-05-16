@@ -3,6 +3,8 @@ from time import process_time
 
 from benchmark.default.print_csv import PrintCSV
 
+"""Provides the time and CPU measurement logic for benchmark execution."""
+
 
 class TimeCPUMeasurement:
     def __init__(self, print_csv: PrintCSV) -> None:

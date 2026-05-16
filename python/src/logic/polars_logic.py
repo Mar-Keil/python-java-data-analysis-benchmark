@@ -2,6 +2,8 @@ from pathlib import Path
 
 import polars as pl
 
+"""Provides the Polars-based benchmark operations for reading, writing, and analyzing datasets."""
+
 
 def read_parquet(path: Path) -> pl.DataFrame:
     return pl.read_parquet(path)
